@@ -39,8 +39,34 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// Alias for /register (frontend expects /signup)
+router.post("/signup", async (req, res) => {
+  try {
+    const { userName, email, password } = req.body;
+    if (!userName || !email || !password)
+      return res.status(400).json({ msg: "All fields required" });
 
+    const existingBooking = await Booking.findOne({ email });
+    if (existingBooking)
+      return res.status(400).json({ msg: "This email is used for offline booking. Contact admin." });
 
+    const existing = await User.findOne({ email });
+    if (existing) return res.status(400).json({ msg: "Email already registered" });
+
+    const hashed = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      userName, email, password: hashed,
+      isPaid: false, currentPlan: null
+    });
+
+    res.status(201).json({
+      msg: "Signup successful",
+      user: { userName: user.userName, email: user.email, role: user.role }
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "Registration failed" });
+  }
+});
 
 router.post("/login", async (req, res) => {
   try {
