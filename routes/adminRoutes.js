@@ -179,7 +179,7 @@ admin.get("/plans/id/:id", async (req, res) => {
 
     const plan = await Plan.findById(req.params.id).populate("days.exercises");
     if (!plan) return res.status(404).json({ msg: "Plan not found" });
-    res.json({ ...plan.toObject(), image: plan.image ? `http://localhost:5000${plan.image}` : null });
+    res.json({ ...plan.toObject(), image: plan.image ? `https://project-backend-p1mt.onrender.com'${plan.image}` : null });
   } catch (err) {
     res.status(500).json({ msg: "Failed" });
   }
@@ -191,7 +191,7 @@ admin.get("/plans", authenticate, admincheck, async (req, res) => {
     const plans = await Plan.find().populate("days.exercises");
     res.json(plans.map(plan => ({
       ...plan.toObject(),
-      image: plan.image ? `http://localhost:5000${plan.image}` : null
+      image: plan.image ? `https://project-backend-p1mt.onrender.com${plan.image}` : null
     })));
   } catch (err) {
     res.status(500).json({ msg: "Failed" });
