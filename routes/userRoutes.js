@@ -184,7 +184,7 @@ router.post("/subscribe/:planId", authenticate, async (req, res) => {
 });
 
 
-const API_BASE_URL = process.env.CURRENT_URL || "http://localhost:5000";
+const API_BASE_URL = process.env.CURRENT_URL ;
 
 
 router.get("/plans/public", async (req, res) => {
