@@ -184,16 +184,21 @@ router.post("/subscribe/:planId", authenticate, async (req, res) => {
 });
 
 
+const API_BASE_URL = process.env.CURRENT_URL || "http://localhost:5000";
+
 
 router.get("/plans/public", async (req, res) => {
   try {
     const plans = await Plan.find();
     console.log(plans);
-    
+
     res.json(plans.map(p => ({
-      _id: p._id, title: p.title, price: p.price,
-      days: p.days || [], bg: p.bg || "bg-gray-800",
-      image: p.image ? `http://localhost:5000${p.image}` : "/placeholder.jpg",
+      _id: p._id,
+      title: p.title,
+      price: p.price,
+      days: p.days || [],
+      bg: p.bg || "bg-gray-800",
+      image: p.image ? `${API_BASE_URL}${p.image}` : "/placeholder.jpg",
       buttonColor: p.buttonColor || "text-black",
       buttonText: p.buttonText || "Start Plan",
     })));
