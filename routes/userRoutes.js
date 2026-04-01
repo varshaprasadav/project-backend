@@ -184,7 +184,7 @@ router.post("/subscribe/:planId", authenticate, async (req, res) => {
 });
 
 
-const API_BASE_URL = process.env.CURRENT_URL ;
+const API_BASE_URL = 'https://project-backend-p1mt.onrender.com'
 
 
 router.get("/plans/public", async (req, res) => {
